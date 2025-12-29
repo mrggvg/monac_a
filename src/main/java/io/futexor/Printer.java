@@ -10,11 +10,13 @@ public class Printer implements Node.Visitor<String> {
 
     @Override
     public String visitLiteral(Node.Literal n) {
-        return "";
+        return n.value + "";
     }
 
     @Override
     public String visitBinary(Node.Binary n) {
-        return "";
+        String left = n.left.accept(this);
+        String right = n.right.accept(this);
+        return "(" + left + " " + n.op + " " + right + ")";
     }
 }
