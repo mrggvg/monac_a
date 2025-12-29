@@ -22,7 +22,7 @@ flowchart LR
 ```
 **Stage intent (briefly):**
 - `src`: raw source code defined in [`language.md`](language.md)
-- `Lexer`: converts characters into words
+- `Scanner`: converts characters into words
 - `Parser`: builds a structured representation
 - `ast`: abstract syntax tree
 - `Visitor`: performs operations over the AST (e.g. codegen)
