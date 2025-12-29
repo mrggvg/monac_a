@@ -154,6 +154,39 @@ NUMBER : [0-9]+ ;
 
 ---
 
+## Even better
+
+Above was the important step but here, is just further simplification, so that the
+implementation part is straight forward.
+
+The problem with above, although it is parser ready, it makes you kinda think to
+implement two functions, one normal and prime, valid approach but cleaner is with
+wile loops, and bellow definitions help to reason easier about it.
+
+
+```antlr
+expression 
+    : additive-expression
+    ;
+
+additive-expression
+    : multiplicativeExpression (('+' | '-') multiplicativeExpression)*
+    ;
+    
+multiplicative-expression
+    : primary-expression (('*' | '/' | '%') primary-expression)*
+    ;
+    
+primary-expression
+    : NUMBER
+    | '(' expression ')'
+    ;
+
+NUMBER : [0-9]+ ;
+```
+
+---
+
 ## Notes
 
 - Operator precedence is enforced structurally:

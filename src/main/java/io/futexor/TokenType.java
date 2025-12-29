@@ -5,6 +5,9 @@ public enum TokenType {
     NUMBER,
     LPAREN, RPAREN,
     MUL, DIV, MOD,
-    ADD, SUB
+    ADD, SUB,
+
+    // useful
+    EOF
 
 }

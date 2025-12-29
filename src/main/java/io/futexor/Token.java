@@ -2,7 +2,7 @@ package io.futexor;
 
 public class Token {
 
-    private final TokenType type;
+    public final TokenType type;
     private final String lexeme;
     private final int line;
     private final int col;
