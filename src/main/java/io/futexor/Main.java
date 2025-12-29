@@ -23,6 +23,16 @@ public class Main {
 
         System.out.println(printedTree);
 
+        Generator gen = new Generator();
+        gen.gen(tree);
+
+
+        System.out.println();
+
+        for (var q : gen.quads) {
+            System.out.println(q);
+        }
+
     }
 
 }
