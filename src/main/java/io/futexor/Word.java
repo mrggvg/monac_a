@@ -3,9 +3,9 @@ package io.futexor;
 public class Word {
 
     public final TokenType type;
-    private final String lexeme;
-    private final int line;
-    private final int col;
+    public final String lexeme;
+    public final int line;
+    public final int col;
 
     public Word(TokenType type, String lexeme, int line, int col) {
         this.type = type;

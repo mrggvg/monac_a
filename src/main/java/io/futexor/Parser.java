@@ -1,27 +1,10 @@
 package io.futexor;
 
+import io.futexor.ir.ast.Node;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Parser {
-
-    public class Node {
-        Word word;
-        ArrayList<Node> children;
-
-        public Node(Word word, Node... children) {
-            this.word = word;
-            this.children = new ArrayList<>();
-
-            // todo: figure out better solution
-            this.children.addAll(Arrays.asList(children));
-        }
-
-        public Node(Word word) {
-            this.word = word;
-            this.children = null;
-        }
-    }
 
     ArrayList<Word> words;
     int cursor = 0;
@@ -75,11 +58,28 @@ public class Parser {
         return new RuntimeException("Parse error at token " + t + " @ " + "" + ": " + message);
     }
 
+
+    private Node.Operator toOperator(Word token) {
+        return switch (token.type) {
+            case ADD -> Node.Operator.ADD;
+            case SUB -> Node.Operator.SUB;
+            case MUL -> Node.Operator.MUL;
+            case DIV -> Node.Operator.DIV;
+            case MOD -> Node.Operator.MOD;
+            default -> null;
+        };
+    }
+
+
+
+
     Node parse() {
         Node n = expression();
         expect(TokenType.EOF, "Expected end of input");
         return n;
     }
+
+
 
 
     // from grammar
@@ -91,9 +91,9 @@ public class Parser {
     private Node additiveExpression() {
         Node left = multiplicativeExpression();
         while (peek().type == TokenType.ADD || peek().type == TokenType.SUB) {
-            Word op = advance();
+            var op = toOperator(advance());
             Node right = multiplicativeExpression();
-            left = new Node(op, left, right);
+            left = new Node.Binary(op, left, right);
         }
         return left;
     }
@@ -101,16 +101,18 @@ public class Parser {
     private Node multiplicativeExpression() {
         Node left = primaryExpression();
         while (peek().type == TokenType.MUL || peek().type == TokenType.DIV || peek().type == TokenType.MOD) {
-            Word op = advance();
+            var op = toOperator(advance());
             Node right = primaryExpression();
-            left = new Node(op, left, right);
+            left = new Node.Binary(op, left, right);
         }
         return left;
     }
 
     private Node primaryExpression() {
 
-        if (match(TokenType.NUMBER)) return new Node(previous());
+        if (match(TokenType.NUMBER)) {
+            return new Node.Literal(Integer.parseInt(previous().lexeme));
+        }
         if (match(TokenType.LPAREN)) {
             Node inside = expression();
             expect(TokenType.RPAREN, ") missing");
@@ -118,7 +120,6 @@ public class Parser {
         }
         error("Expected NUMBER or '('");
         return null; // this should not be reachable
-
 
     }
 
