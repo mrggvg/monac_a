@@ -15,8 +15,8 @@ public class Scanner {
         this.code = code;
     }
 
-    public ArrayList<Token> scan() {
-        ArrayList<Token> tokens = new ArrayList<>();
+    public ArrayList<Word> scan() {
+        ArrayList<Word> words = new ArrayList<>();
 
         while (cursor < code.length()) {
             char c = nextChar();
@@ -28,28 +28,28 @@ public class Scanner {
                     cursor++;
                 }
                 String lexeme = code.substring(start, cursor);
-                tokens.add(new Token(TokenType.NUMBER, lexeme, 0, 0));
+                words.add(new Word(TokenType.NUMBER, lexeme, 0, 0));
                 continue;
             }
 
-            if (c == '(') tokens.add(new Token(TokenType.LPAREN, "(", 0, 0));
-            if (c == ')') tokens.add(new Token(TokenType.RPAREN, ")", 0, 0));
+            if (c == '(') words.add(new Word(TokenType.LPAREN, "(", 0, 0));
+            if (c == ')') words.add(new Word(TokenType.RPAREN, ")", 0, 0));
 
-            if (c == '*') tokens.add(new Token(TokenType.MUL, "*", 0, 0));
-            if (c == '/') tokens.add(new Token(TokenType.DIV, "/", 0, 0));
-            if (c == '%') tokens.add(new Token(TokenType.MOD, "%", 0, 0));
+            if (c == '*') words.add(new Word(TokenType.MUL, "*", 0, 0));
+            if (c == '/') words.add(new Word(TokenType.DIV, "/", 0, 0));
+            if (c == '%') words.add(new Word(TokenType.MOD, "%", 0, 0));
 
-            if (c == '+') tokens.add(new Token(TokenType.ADD, "+", 0, 0));
-            if (c == '-') tokens.add(new Token(TokenType.SUB, "-", 0, 0));
+            if (c == '+') words.add(new Word(TokenType.ADD, "+", 0, 0));
+            if (c == '-') words.add(new Word(TokenType.SUB, "-", 0, 0));
 
 
 
             cursor++;
         }
 
-        tokens.add(new Token(TokenType.EOF, "", 0, 0));
+        words.add(new Word(TokenType.EOF, "", 0, 0));
 
-        return tokens;
+        return words;
     }
 
     private char nextChar() {

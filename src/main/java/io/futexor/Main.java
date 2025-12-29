@@ -6,11 +6,11 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner("((1 + 2) * (3 + 4)) % 5");
-        ArrayList<Token> tokens = scanner.scan();
+        ArrayList<Word> words = scanner.scan();
 
-        for (var t : tokens) System.out.println(t);
+        for (var t : words) System.out.println(t);
 
-        Parser parser = new Parser(tokens);
+        Parser parser = new Parser(words);
         Parser.Node tree = parser.parse();
 
         System.out.println();
@@ -24,8 +24,8 @@ public class Main {
 
     public static void show(Parser.Node root) {
         if (root == null) return;
-        System.out.println(root.token);
-        showChildren(root, "", true);
+        System.out.println(root.word);
+        showChildren(root, "", false);
     }
 
     private static void showChildren(Parser.Node parent, String prefix, boolean parentIsLast) {
@@ -38,7 +38,7 @@ public class Main {
             Parser.Node child = parent.children.get(i);
             boolean isLast = (i == parent.children.size() - 1);
 
-            System.out.println(prefix + (isLast ? "└── " : "├── ") + child.token);
+            System.out.println(prefix + (isLast ? "└── " : "├── ") + child.word);
 
             // Recurse with updated prefix
             showChildren(child, childPrefix, isLast);

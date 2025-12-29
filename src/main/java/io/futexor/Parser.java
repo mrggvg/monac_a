@@ -6,40 +6,39 @@ import java.util.Arrays;
 public class Parser {
 
     public class Node {
-        Token token;
+        Word word;
         ArrayList<Node> children;
 
-        public Node(Token token, Node... children) {
-            this.token = token;
+        public Node(Word word, Node... children) {
+            this.word = word;
             this.children = new ArrayList<>();
 
             // todo: figure out better solution
             this.children.addAll(Arrays.asList(children));
         }
 
-
-        public Node(Token token) {
-            this.token = token;
+        public Node(Word word) {
+            this.word = word;
             this.children = null;
         }
     }
 
-    ArrayList<Token> tokens;
+    ArrayList<Word> words;
     int cursor = 0;
 
 
-    public Parser(ArrayList<Token> tokens) {
-        this.tokens = tokens;
+    public Parser(ArrayList<Word> words) {
+        this.words = words;
     }
 
     // helpers
 
-    private Token peek() {
-        return tokens.get(cursor);
+    private Word peek() {
+        return words.get(cursor);
     }
 
-    private Token previous() {
-        return tokens.get(cursor - 1);
+    private Word previous() {
+        return words.get(cursor - 1);
     }
 
     private boolean isAtEnd() {
@@ -50,7 +49,7 @@ public class Parser {
         return peek().type == type;
     }
 
-    private Token advance() {
+    private Word advance() {
         if (!isAtEnd()) cursor++;
         return previous();
     }
@@ -66,13 +65,13 @@ public class Parser {
         return false;
     }
 
-    private Token expect(TokenType type, String message) {
+    private Word expect(TokenType type, String message) {
         if (check(type)) return advance();
         throw error(message + " (found " + peek() + ")");
     }
 
     private RuntimeException error(String message) {
-        Token t = peek();
+        Word t = peek();
         return new RuntimeException("Parse error at token " + t + " @ " + "" + ": " + message);
     }
 
@@ -92,7 +91,7 @@ public class Parser {
     private Node additiveExpression() {
         Node left = multiplicativeExpression();
         while (peek().type == TokenType.ADD || peek().type == TokenType.SUB) {
-            Token op = advance();
+            Word op = advance();
             Node right = multiplicativeExpression();
             left = new Node(op, left, right);
         }
@@ -102,7 +101,7 @@ public class Parser {
     private Node multiplicativeExpression() {
         Node left = primaryExpression();
         while (peek().type == TokenType.MUL || peek().type == TokenType.DIV || peek().type == TokenType.MOD) {
-            Token op = advance();
+            Word op = advance();
             Node right = primaryExpression();
             left = new Node(op, left, right);
         }

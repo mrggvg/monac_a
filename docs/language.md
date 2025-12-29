@@ -170,7 +170,7 @@ expression
     ;
 
 additive-expression
-    : multiplicativeExpression (('+' | '-') multiplicativeExpression)*
+    : multiplicative-expression (('+' | '-') multiplicative-expression)*
     ;
     
 multiplicative-expression
