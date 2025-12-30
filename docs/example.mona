@@ -1,0 +1,49 @@
+u16 add(u16 a, u16 b) {
+    return a + b;
+}
+
+void main() {
+    u16 x = 40;
+    u16 y = 2;
+
+    // deref a pointer
+    u16 from = *asdf;
+
+    u16 result = add(x, y);
+}
+
+
+// z = 3z − (x + y)/2
+u16 compute(u16 x, u16 y, u16 z) {
+    return 3 * z - (x + y) / 2;
+}
+
+// swaping two values from mem
+void swap() {
+    // this can't be really done with the current grammar
+}
+
+//  void swap(u16* x, u16* y) {
+//      u16 tmp = *x;
+//      *x = *y;
+//      *y = tmp;
+//  }
+
+
+
+
+// 16 · (2x − y)
+u16 compute(u16 x, u16 y) {
+    return 16 * (2 * x - y);
+}
+
+// x * x − y * y
+u16 squared(u16 x) {
+    return x * x;
+}
+
+// power? recursively
+u16 pow(u16 n, u16 p) {
+
+}
+
