@@ -45,18 +45,18 @@ factorial(n) {
 
 Example of TAC that I might use (example is for factorial recursive)
 
-| Operation | Address 1   | Address 2 | Destination |
-| --------- | ----------- | --------- | ----------- |
-| `if_le`   | `n`         | `1`       | `L_base`    |
-| `jmp`     |             |           | `L_rec`     |
-| `label`   | `L_base`    |           |             |
-| `ret`     | `1`         |           |             |
-| `label`   | `L_rec`     |           |             |
-| `sub`     | `n`         | `1`       | `t0`        |
-| `param`   | `t0`        |           |             |
-| `call`    | `factorial` | `1`       | `t1`        |
-| `mul`     | `n`         | `t1`      | `t2`        |
-| `ret`     | `t2`        |           |             |
+| Operation | Address 1   | Address 2   | Destination       |
+| --------- | ----------- |-------------|-------------------|
+| `if_le`   | `n`         | `1`         | `L_base`          |
+| `jmp`     |             |             | `L_rec`           |
+| `label`   | `L_base`    |             |                   |
+| `ret`     | `1`         |             |                   |
+| `label`   | `L_rec`     |             |                   |
+| `sub`     | `n`         | `1`         | `t0`              |
+| `param`   | `t0`        |             |                   |
+| `call`    | `factorial` | `1` #params | `t1` #result temp |
+| `mul`     | `n`         | `t1`        | `t2`              |
+| `ret`     | `t2`        |             |                   |
 
 
 
