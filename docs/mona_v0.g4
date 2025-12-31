@@ -1,12 +1,28 @@
 grammar mona_v0;
 
 
+// Constants
+
+//constant:
+//integer-constant
+//floating-constant
+//enumeration-constant
+//character-constant
+
+constant: NUMBER ;
+
 
 
 
 // Expressions
 
-primary_expression: IDENTIFIER | constant | string_literal | '(' expression ')' | generic_selection ;
+primary_expression:
+    | IDENTIFIER
+    | constant
+    //| string_literal
+    | '(' expression ')'
+    | generic_selection
+    ;
 
 generic_selection : '_Generic' '(' assignment_expression ',' generic_assoc_list ')' ;
 
