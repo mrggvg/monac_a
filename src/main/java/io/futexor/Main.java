@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner("100 + 3 * (3 - 4)");
+        Scanner scanner = new Scanner("1 - (1 / 2) * 2");
         ArrayList<Word> words = scanner.scan();
 
         for (var t : words) System.out.println(t);
@@ -75,6 +75,11 @@ class AsmGenerator implements Node.Visitor<String> {
                     .append("POP A").append("\n")
                     .append("DIV B").append("\n")
                     .append("PUSH A").append("\n");
+
+            // a mod b = a − (a / b) ⋅ b
+            case MOD -> {
+
+            }
         }
 
         return "";
