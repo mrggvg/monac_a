@@ -19,7 +19,45 @@ public class Experiment {
         quads.add(new Quad(Op.RET, "t3", null, null));
 
 
-        for (var q : quads) System.out.println(q);
+        StringBuilder out = new StringBuilder();
+
+        quads.forEach(q -> {
+
+            // D for ret address
+            // A for n
+
+            switch (q.op()) {
+                case LE -> {
+                    out
+                            .append("POP A").append("\n")
+                            .append("PUSH A").append("\n")
+                            .append("CMP A, 1").append("\n");
+                }
+                case BR -> {
+                    out
+                            .append("JNA ").append(q.a2()).append("\n")
+                            .append("JMP ").append(q.a3()).append("\n");
+                }
+                case LABEL -> {
+                    out.append(q.a1()).append(":\n");
+                }
+                case RET -> {
+                    out
+                            .append("PUSH A").append("\n")
+                            .append("PUSH D").append("\n")
+                            .append("RET").append("\n");
+                }
+                case SUB -> {
+                    out
+                            .append("POP A").append("\n")
+                            .append("SUB A,").append(q.a2()).append("\n")
+                            .append("PUSH A").append("\n");
+                }
+            }
+
+        });
+
+        System.out.println(out);
 
     }
 }
