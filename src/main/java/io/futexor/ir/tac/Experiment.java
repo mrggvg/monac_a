@@ -8,10 +8,7 @@ public class Experiment {
 
         ArrayList<Quad> quads = new ArrayList<>();
         quads.add(new Quad(Op.LE, "n", "1", "t0"));
-
-        quads.add(new Quad(Op.CMP, "t0", "", "L0"));
-
-        quads.add(new Quad(Op.JMP, null, null, "L1"));
+        quads.add(new Quad(Op.BR, "t0", "L0", "L1"));
         quads.add(new Quad(Op.LABEL, "L0", null, null));
         quads.add(new Quad(Op.RET, "1", null, null));
         quads.add(new Quad(Op.LABEL, "L1", null, null));
@@ -22,42 +19,24 @@ public class Experiment {
         quads.add(new Quad(Op.RET, "t3", null, null));
 
 
-
         for (var q : quads) System.out.println(q);
 
     }
 }
 
 enum Op {
-    // binary operators
     ADD, SUB, MUL, DIV, MOD,
-    EQ, NE, LT, LE, GT, GE, // these also produce value, not jump!
-
-    // control flow
-    JMP, LABEL, RET, CMP,
-
-    // === branching ===
-    BR,
-    // conditional:     (BR, value, label, label)
-    // unconditional:   (BR, label)
-
-
-    PARAM, // to pass parameter to function
-    CALL,  // to call the function
-
-
-    // assignment operators
-    ASSIGN,
-
-    LOAD,   // copy value in reg
-    STORE,  // store value from reg
+    EQ, NE, LT, LE, GT, GE,
+    BR, PARAM, CALL, RET, LABEL,
 }
 
-// x = x + 3 * (3 - 4) % 3;
+record Quad(Op op, String a1, String a2, String a3) {
 
-record Quad(Op op, String a1, String a2, String dst) {
     @Override
     public String toString() {
-        return String.format("| %-8s | %-8s | %-8s | %-8s |", op, a1, a2, dst);
+        String adr1 = a1 == null ? "" : a1;
+        String adr2 = a2 == null ? "" : a2;
+        String adr3 = a3 == null ? "" : a3;
+        return String.format("| %-8s | %-8s | %-8s | %-8s |", op, adr1, adr2, adr3);
     }
 }
