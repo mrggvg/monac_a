@@ -32,12 +32,14 @@ var_declaration : type IDENTIFIER ASSIGN expression SEMICOLON ;
 
 // Expressions
 
-expression
-    : assignment_expression
-    | equality_expression
+expression : assignment_expression ;
+
+assignment_expression
+    : equality_expression
+    | IDENTIFIER ASSIGN expression
     ;
 
-assignment_expression : IDENTIFIER ASSIGN expression ;
+
 equality_expression : relational_expression ((EQ | NEQ) relational_expression)* ;
 relational_expression : additive_expression ((LE | GE | LT | GT) additive_expression)* ;
 additive_expression : multiplicative_expression ((ADD | SUB) multiplicative_expression)* ;
@@ -53,7 +55,6 @@ primary_expression
 arguments : expression (COMMA expression)* ;
 
 type : VOID | BYTE | WORD ;
-
 
 // ---------- Lexer ----------
 

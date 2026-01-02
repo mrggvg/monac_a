@@ -5,38 +5,6 @@ import java.util.regex.*;
 
 public class Lexer {
 
-    enum TokenType {
-        // Keywords
-        RETURN, IF, ELSE, WHILE, BREAK,
-        // Types
-        VOID, BYTE, WORD,
-        // Operators
-        EQ, NEQ, LE, GE, ASSIGN, LT, GT,
-        ADD, SUB, MUL, DIV, MOD,
-        // Others
-        SEMICOLON, LPAREN, RPAREN, LBRACE, RBRACE, COMMA,
-        // Literals/Identifiers
-        CONSTANT, IDENTIFIER,
-        EOF
-    }
-
-    static class Token {
-        final TokenType type;
-        final String lexeme;
-        final int line, column;
-
-        Token(TokenType type, String lexeme, int line, int column) {
-            this.type = type;
-            this.lexeme = lexeme;
-            this.line = line;
-            this.column = column;
-        }
-
-        @Override public String toString() {
-            return type + "('" + lexeme + "')@" + line + ":" + column;
-        }
-    }
-
     private record Rule(TokenType type, Pattern pattern, boolean skip) {}
 
     private static final List<Rule> RULES = List.of(
